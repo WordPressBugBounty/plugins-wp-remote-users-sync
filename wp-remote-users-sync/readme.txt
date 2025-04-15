@@ -4,7 +4,7 @@ Donate link: https://paypal.me/frogerme
 Tags: sync, share login, multiple sites
 Requires at least: 4.9.5
 Tested up to: 6.8
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 Requires PHP: 8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -51,6 +51,12 @@ Integrations added to core are limited to popular plugins and themes: any extra 
 A typical example necessitating custom integration includes plugins or themes relying on their own custom tables, directly updating the database with SQL queries instead of using WordPress built-in functions, destroying sessions with low-level functions instead of using the built-in WordPress method, etc.
 
 If such need for plugin integration arises, website administrators **MUST** contact a third-party developer. The plugin author currently does not have the bandwidth to take on custom work for WPRUS.
+
+== Upgrade Notice ==
+
+= 2.1.1 =
+
+All your site must be using WordPress with a version superior or equal to 6.8, **OR** all your sites must be using WordPress with a version inferior or equal to 6.8. If one site is using, for example, WordPress 6.8 and another site is using WordPress 6.7, the password handling will not work properly.
 
 == Installation ==
 
@@ -172,6 +178,9 @@ More help can be found on <a href="https://wordpress.org/support/plugin/wp-remot
 Help is provided for previously unanswered general enquiries and bug fixes only: feature requests, extra integration or conflict resolution with third-party themes or plugins, and specific setup troubleshooting requests will not be addressed (Website administrators must contact a third-party developer).
 
 == Changelog ==
+
+= 2.1.1 =
+* Force distinction for password handling between WordPress 6.8 and older versions
 
 = 2.1.0 =
 * Require PHP 8.0 minimum
