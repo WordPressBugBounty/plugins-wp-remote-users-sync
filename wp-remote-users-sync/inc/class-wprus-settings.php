@@ -524,22 +524,39 @@ class Wprus_Settings {
 	public function get_site( $url, $action = false, $direction = false ) {
 		$sites = $this->get_sites( $action, $direction );
 
-		if ( ! empty( $sites ) ) {
+		if ( empty( $sites ) ) {
+			return false;
+		}
 
-			foreach ( $sites as $site ) {
-				$url_parse_url  = wp_parse_url( $url );
-				$url_host       = isset( $url_parse_url['host'] ) ? $url_parse_url['host'] : false;
-				$site_parse_url = wp_parse_url( $site['url'] );
-				$site_host      = isset( $site_parse_url['host'] ) ? $site_parse_url['host'] : false;
+		$match          = false;
+		$best_match_len = 0;
+		$url_parts      = wp_parse_url( untrailingslashit( $url ) );
+		$url_host       = $url_parts['host'] ?? false;
+		$url_path       = $url_parts['path'] ?? '';
 
-				if ( $site_host && $url_host && $site_host === $url_host ) {
+		foreach ( $sites as $site ) {
+			$site_parts = wp_parse_url( untrailingslashit( $site['url'] ) );
+			$site_host  = $site_parts['host'] ?? false;
+			$site_path  = $site_parts['path'] ?? '';
 
-					return $site;
+			if ( ! $site_host || ! $url_host || $site_host !== $url_host ) {
+				continue;
+			}
+
+			$normalized_site_path = untrailingslashit( $site_path );
+			$normalized_url_path  = untrailingslashit( $url_path );
+
+			if ( 0 === strpos( $normalized_url_path, $normalized_site_path ) ) {
+				$len = strlen( $normalized_site_path );
+
+				if ( $len >= $best_match_len ) {
+					$best_match_len = $len;
+					$match          = $site;
 				}
 			}
 		}
 
-		return false;
+		return $match;
 	}
 
 	/*******************************************************************
